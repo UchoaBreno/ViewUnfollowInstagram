@@ -1,130 +1,145 @@
-# Instagram Unfollow Bot
+# ✨ Instagram Unfollow Bot
+## 📘 Tutorial em Português e em Inglês / Tutorial in Portuguese and English
 
-✨ Liberte seu feed do Instagram e recupere o controle da sua lista de seguidores! Este simples, mas poderoso script em Python deixa de seguir automaticamente usuários que não te seguem de volta, economizando tempo e esforço. Perfeito para contas pessoais, gerentes de redes sociais ou qualquer pessoa que queira manter sua lista de seguidos limpa e relevante.
 
-✅ Compatível com Google Chrome e Microsoft Edge  
-✅ Configuração fácil com instruções claras  
-✅ Totalmente automatizado após iniciar  
+🚀 **Automatize sua limpeza no Instagram com estilo!**  
+Um script em Python que deixa de seguir automaticamente os usuários que não te seguem de volta. Ideal para perfis pessoais, gerentes de mídias sociais ou qualquer um que queira manter a lista de seguidos organizada.
+
+✅ Compatível com **Google Chrome** e **Microsoft Edge**  
+✅ Configuração fácil com passo a passo ilustrado  
+✅ Totalmente automático após iniciar
 
 ---
 
-## 📋 Tutorial em Português e em Inglês
+## 📘 Guia Rápido — Instalação e Uso
 
-### 📘 Português
-
-### 1️⃣ Pré-requisitos
-
-✅ Python 3.x instalado, disponível em: https://www.python.org/  
-✅ Pacotes Python: `selenium` e `webdriver-manager`
-
-Verifique no Prompt de Comando, cntrl + R, digite cmd e digite:
-```cmd
+### 🐍 Instale o Python
+- Baixe no [python.org](https://www.python.org/) e instale.
+- Marque **Add Python to PATH**.
+- Teste no prompt:
+```bash
 python --version
 ```
-Deve aparecer algo como `Python 3.x.x`.
+✅ Saída esperada: `Python 3.x.x`
 
-### 2️⃣ Instale as dependências
-```cmd
+### 📦 Instale as dependências
+```bash
 pip install selenium webdriver-manager
 ```
 
-### 3️⃣ Baixe os dados do Instagram
+### 📄 Baixe seus dados do Instagram
+- Vá em **Configurações > Baixar ou transferir informações**
+- Escolha *Algumas de suas informações* > *Seguidores e seguindo*
+- Confirme o e-mail e clique em *Criar arquivo*
+- Baixe e extraia o ZIP
+- Gere o arquivo `nao_me_seguem_de_volta.txt`
 
-1. Acesse **Configurações** no Instagram.  
-2. Na lupa, digite **informações**.  
-3. Clique em *Baixar ou transferir informações*.  
-4. Escolha *Algumas de suas informações*.  
-5. Marque apenas *Seguidores e seguindo*.  
-6. Confirme o e-mail.  
-7. Clique em *Criar arquivo*.  
-8. Baixe o arquivo ZIP enviado por e-mail e extraia.  
-9. Gere o arquivo `nao_me_seguem_de_volta.txt` com os nomes dos usuários que você segue mas não te seguem.
+### 📝 Crie o script `.py`
+- Cole o código desejado (Chrome ou Edge) num editor de texto
+- Salve como `instagramUnfollow.py` com codificação *UTF-8* e tipo *Todos os arquivos*
+- Ative no Explorer a exibição de extensões e confirme que está `.py`
 
-### 4️⃣ Crie o script `.py`
+---
 
-1. Abra o Bloco de Notas.
-2. Cole o código para o navegador desejado (Chrome ou Edge).
-3. Salve como `instagramUnfollow.py`.
-4. No Explorer, vá em *Exibir*, ative *Extensões de nomes de arquivos* e confirme que o arquivo está `.py` e não `.py.txt`.
+## 🌐 Código para Chrome
+```python
+# Coloque aqui o código do Chrome
+```
 
-### 5️⃣ Execute o script
+## 🟢 Código para Edge
+```python
+# Coloque aqui o código do Edge
+```
 
-No Prompt de Comando, vá até a pasta:
-```cmd
+---
+
+### ▶️ Execute o script
+No prompt, vá até a pasta:
+```bash
 cd caminho\da\pasta
 ```
 E rode:
-```cmd
-python instagramUnfollowEdge.py ou python instagramUnfollowChrome.py
+```bash
+python instagramUnfollowChrome.py
+```
+Ou:
+```bash
+python instagramUnfollowEdge.py
 ```
 
-O script abrirá o navegador escolhido, você faz login e o bot começa a deixar de seguir automaticamente.
-
-
-
--------------------
-
-
-
-### 📗 English
-
-# Instagram Unfollow Bot
-
-✨ Free up your Instagram feed and take back control of your follower list! This simple yet powerful Python script automatically unfollows users who don't follow you back, saving you time and effort. Perfect for personal accounts, social media managers, or anyone looking to keep their following list clean and relevant.
-
-✅ Supports both Google Chrome and Microsoft Edge  
-✅ Beginner-friendly setup with clear instructions  
-✅ Fully automated once started  
+✅ O navegador abrirá, faça login e o bot começa a rodar após 30 segundos.
 
 ---
 
-### 1️⃣ Prerequisites
+# ✨ Instagram Unfollow Bot (English)
 
-✅ Python 3.x installed: https://www.python.org/  
-✅ Python packages: `selenium` and `webdriver-manager`
+🚀 **Automate your Instagram cleanup in style!**  
+A Python script that automatically unfollows users who don’t follow you back. Perfect for personal accounts, social media managers, or anyone keeping their following list clean.
 
-Check in Command Prompt:
-```cmd
+✅ Supports **Google Chrome** and **Microsoft Edge**  
+✅ Easy setup with illustrated steps  
+✅ Fully automated once started
+
+---
+
+## 📘 Quick Guide — Setup and Usage
+
+### 🐍 Install Python
+- Download from [python.org](https://www.python.org/) and install.
+- Check **Add Python to PATH**.
+- Test in prompt:
+```bash
 python --version
 ```
-It should show `Python 3.x.x`.
+✅ Expected output: `Python 3.x.x`
 
-### 2️⃣ Install dependencies
-```cmd
+### 📦 Install dependencies
+```bash
 pip install selenium webdriver-manager
 ```
 
-### 3️⃣ Download your Instagram data
+### 📄 Get your Instagram data
+- Go to **Settings > Download or transfer information**
+- Choose *Some of your information* > *Followers and following*
+- Confirm email and click *Create file*
+- Download and extract ZIP
+- Generate `nao_me_seguem_de_volta.txt`
 
-1. Go to **Settings** in Instagram.  
-2. In the search bar, type **information**.  
-3. Click *Download or transfer information*.  
-4. Select *Some of your information*.  
-5. Check only *Followers and following*.  
-6. Confirm your email.  
-7. Click *Create file*.  
-8. Download the ZIP sent to your email and extract it.  
-9. Create the `nao_me_seguem_de_volta.txt` file listing the users you follow but who don’t follow you back.
+### 📝 Create the `.py` script
+- Paste the desired code (Chrome or Edge) into a text editor
+- Save as `instagramUnfollow.py` with *UTF-8* encoding and type *All files*
+- Enable file extensions in Explorer and ensure it’s `.py`
 
-### 4️⃣ Create the `.py` script
+---
 
-1. Open Notepad.
-2. Paste the code for your browser of choice (Chrome or Edge).
-3. Save as `instagramUnfollow.py`.
-4. In Explorer, enable *File name extensions* and confirm the file is `.py`.
+## 🌐 Chrome Version
+```python
+# Paste Chrome code here
+```
 
-### 5️⃣ Run the script
+## 🟢 Edge Version
+```python
+# Paste Edge code here
+```
 
+---
+
+### ▶️ Run the script
 In Command Prompt, navigate to the folder:
-```cmd
+```bash
 cd path\to\folder
 ```
 And run:
-```cmd
-python instagramUnfollowEdge.py or python instagramUnfollowChrome.py
+```bash
+python instagramUnfollowChrome.py
+```
+Or:
+```bash
+python instagramUnfollowEdge.py
 ```
 
-The script will open the chosen browser, you log in, and the bot starts unfollowing automatically.
+✅ The browser will open, log in, and the bot starts after 30 seconds.
 
+---
 
-Enjoy! 🚀
+✨ Enjoy! 🚀
