@@ -1,0 +1,394 @@
+# 📋 TUTORIAL COMPLETO PARA O BOT DE UNFOLLOW NO INSTAGRAM (CHROME e EDGE)
+
+1-️ Baixe e instale o Python 3.x
+- Acesse https://www.python.org/ e clique em *Download Python* para Windows.
+- Execute o instalador e marque a opção *Add Python to PATH* antes de clicar em Install Now
+- Para verificar se instalou corretamente, abra o Prompt de Comando:
+  - Pressione as teclas `Win + R`, digite `cmd` e pressione `Enter`.
+  - Na janela preta do Prompt de Comando, digite:
+
+cmd
+python --version
+
+✅ Ele deve mostrar algo como `Python 3.x.x`.
+
+
+2️- Instale as dependências
+No mesmo Prompt de Comando, digite:
+cmd
+
+pip install selenium webdriver-manager
+
+✅ Ele instalará as bibliotecas necessárias para o script funcionar.
+
+
+3️- Baixe os dados do Instagram para gerar o arquivo `nao_me_seguem_de_volta.txt`
+
+- No Instagram, vá em Configurações
+- Na lupa de pesquisa, digite informações
+- Clique em Baixar ou transferir informações
+- Escolha a opção Algumas de suas informações
+- Marque apenas a opção Seguidores e seguindo
+- Confirme seu e-mail (onde você receberá a notificação quando o arquivo estiver pronto)
+- Clique em Criar arquivo
+- Após alguns minutos, o Instagram enviará um e-mail informando que o arquivo está pronto para ser baixado.
+- Baixe o arquivo, extraia-o e gere a lista `nao_me_seguem_de_volta.txt` com os nomes dos usuários que você segue mas não te seguem de volta.
+
+
+4️- Crie o arquivo `.py` corretamente e garanta que a extensão apareça
+- Abra o Bloco de Notas ou outro editor de texto.
+- Copie o código de uma das versões abaixo (Chrome ou Edge).
+- No editor, clique em Arquivo > Salvar como... e escolha a pasta desejada.
+- No campo *Nome do arquivo*, digite: `instagramUnfollow.py`
+- Em *Tipo*, selecione: *Todos os arquivos*.
+- Em *Codificação*, escolha: *UTF-8*.
+- Clique em **Salvar**.
+
+
+⚠️ Por padrão, o Windows pode esconder a extensão `.txt` dos arquivos. Para garantir que o nome do arquivo está correto:
+- Abra o Explorador de Arquivos.
+- Clique na aba Exibir.
+- Marque a caixa Extensões de nomes de arquivos.
+- Verifique que o arquivo está como `instagramUnfollow.py` (e não `instagramUnfollow.py.txt`).
+
+---
+
+ 🌐 Versão para Chrome
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from time import sleep
+
+ARQUIVO_USUARIOS = "nao_me_seguem_de_volta.txt"
+TEMPO_LOGIN = 30
+TEMPO_ENTRE_ACOES = 5
+TIMEOUT_CONFIRMAR = 10
+
+with open(ARQUIVO_USUARIOS, "r", encoding="utf-8") as f:
+    usuarios = [line.strip() for line in f if line.strip()]
+
+print(f"Encontrados {len(usuarios)} usuários para deixar de seguir.")
+
+options = webdriver.ChromeOptions()
+options.add_argument("--start-maximized")
+options.add_experimental_option("detach", True)
+
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+wait = WebDriverWait(driver, TIMEOUT_CONFIRMAR)
+
+print("Abra o navegador e faça login na sua conta.")
+driver.get("https://www.instagram.com")
+sleep(TEMPO_LOGIN)
+
+for idx, usuario in enumerate(usuarios, start=1):
+    perfil_url = f"https://www.instagram.com/{usuario}/"
+    driver.get(perfil_url)
+    print(f"[{idx}/{len(usuarios)}] Visitando {usuario}...")
+    sleep(3)
+    try:
+        btns = driver.find_elements(By.XPATH, "//button")
+        for btn in btns:
+            if btn.text.lower() in ["seguindo", "following"]:
+                btn.click()
+                try:
+                    confirmar_span = wait.until(EC.element_to_be_clickable((
+                        By.XPATH, "//span[text()='Deixar de seguir'] | //span[text()='Unfollow']"
+                    )))
+                    confirmar_span.click()
+                    print(f"✅ Deixou de seguir: {usuario}")
+                except Exception as e:
+                    print(f"⚠️ Botão de confirmação não encontrado para {usuario}: {e}")
+                break
+        else:
+            print(f"⚠️ Botão 'Seguindo' não encontrado para {usuario}.")
+    except NoSuchElementException as e:
+        print(f"⚠️ Erro com {usuario}: {e}")
+    sleep(TEMPO_ENTRE_ACOES)
+
+print("🎯 Concluído!")
+```
+
+---
+
+
+🟢 Versão para Edge
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.edge.service import Service
+from webdriver_manager.microsoft import EdgeChromiumDriverManager
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from time import sleep
+
+ARQUIVO_USUARIOS = "nao_me_seguem_de_volta.txt"
+TEMPO_LOGIN = 30
+TEMPO_ENTRE_ACOES = 5
+TIMEOUT_CONFIRMAR = 10
+
+with open(ARQUIVO_USUARIOS, "r", encoding="utf-8") as f:
+    usuarios = [line.strip() for line in f if line.strip()]
+
+print(f"Encontrados {len(usuarios)} usuários para deixar de seguir.")
+
+options = webdriver.EdgeOptions()
+options.add_argument("--start-maximized")
+options.add_experimental_option("detach", True)
+
+driver = webdriver.Edge(service=Service(EdgeChromiumDriverManager().install()), options=options)
+wait = WebDriverWait(driver, TIMEOUT_CONFIRMAR)
+
+print("Abra o navegador e faça login na sua conta.")
+driver.get("https://www.instagram.com")
+sleep(TEMPO_LOGIN)
+
+for idx, usuario in enumerate(usuarios, start=1):
+    perfil_url = f"https://www.instagram.com/{usuario}/"
+    driver.get(perfil_url)
+    print(f"[{idx}/{len(usuarios)}] Visitando {usuario}...")
+    sleep(3)
+    try:
+        btns = driver.find_elements(By.XPATH, "//button")
+        for btn in btns:
+            if btn.text.lower() in ["seguindo", "following"]:
+                btn.click()
+                try:
+                    confirmar_span = wait.until(EC.element_to_be_clickable((
+                        By.XPATH, "//span[text()='Deixar de seguir'] | //span[text()='Unfollow']"
+                    )))
+                    confirmar_span.click()
+                    print(f"✅ Deixou de seguir: {usuario}")
+                except Exception as e:
+                    print(f"⚠️ Botão de confirmação não encontrado para {usuario}: {e}")
+                break
+        else:
+            print(f"⚠️ Botão 'Seguindo' não encontrado para {usuario}.")
+    except NoSuchElementException as e:
+        print(f"⚠️ Erro com {usuario}: {e}")
+    sleep(TEMPO_ENTRE_ACOES)
+
+print("🎯 Concluído!")
+```
+
+---
+
+5️- Execute o script
+No mesmo Prompt de Comando, navegue até a pasta onde salvou o script:
+
+cmd
+cd caminho\da\pasta
+
+E rode:
+
+python instagramUnfollowEdge.py
+ou
+python instagramUnfollowChrome.py
+
+
+✅ Ele abrirá o navegador escolhido, você faz login no Instagram, espera 30 segundos e ele começará a deixar de seguir automaticamente.
+
+--------------------------------------------------
+--------------------------------------------------
+--------------------------------------------------
+
+# Instagram Unfollow Bot (English)
+
+✨ Free up your Instagram feed and take back control of your follower list! This simple yet powerful Python script automatically unfollows users who don't follow you back, saving you time and effort. Perfect for personal accounts, social media managers, or anyone looking to keep their following list clean and relevant.
+
+✅ Supports both Google Chrome and Microsoft Edge  
+✅ Beginner-friendly setup with clear instructions  
+✅ Fully automated once started  
+
+---
+
+## 📋 README — Setup and Usage
+
+### 1️⃣ Download and install Python 3.x
+- Download from [python.org](https://www.python.org/) and click *Download Python* for Windows.
+- Run the installer and check *Add Python to PATH* before clicking Install Now.
+- To verify installation, open Command Prompt:
+```bash
+python --version
+```
+✅ Should display something like `Python 3.x.x`.
+
+### 2️⃣ Install dependencies
+```bash
+pip install selenium webdriver-manager
+```
+✅ Installs the required libraries.
+
+### 3️⃣ Get your Instagram data to generate `nao_me_seguem_de_volta.txt`
+
+- On Instagram, go to **Settings**
+- In the search bar, type *information*
+- Click *Download or transfer information*
+- Choose *Some of your information*
+- Select only *Followers and following*
+- Confirm your email
+- Click *Create file*
+- When you get the email, download and extract the ZIP
+- Create `nao_me_seguem_de_volta.txt` listing the users you follow but who don’t follow back
+
+### 4️⃣ Create the Python script
+
+- Open Notepad or a text editor
+- Paste one of the codes below (Chrome or Edge)
+- Save as `instagramUnfollow.py` selecting *All files* and *UTF-8*
+- Make sure file extensions are visible and the file is named `instagramUnfollow.py` (not `.py.txt`)
+
+---
+
+## 🌐 Chrome Version
+```python
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from time import sleep
+
+ARQUIVO_USUARIOS = "nao_me_seguem_de_volta.txt"
+TEMPO_LOGIN = 30
+TEMPO_ENTRE_ACOES = 5
+TIMEOUT_CONFIRMAR = 10
+
+with open(ARQUIVO_USUARIOS, "r", encoding="utf-8") as f:
+    usuarios = [line.strip() for line in f if line.strip()]
+
+print(f"Encontrados {len(usuarios)} usuários para deixar de seguir.")
+
+options = webdriver.ChromeOptions()
+options.add_argument("--start-maximized")
+options.add_experimental_option("detach", True)
+
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+wait = WebDriverWait(driver, TIMEOUT_CONFIRMAR)
+
+print("Abra o navegador e faça login na sua conta.")
+driver.get("https://www.instagram.com")
+sleep(TEMPO_LOGIN)
+
+for idx, usuario in enumerate(usuarios, start=1):
+    perfil_url = f"https://www.instagram.com/{usuario}/"
+    driver.get(perfil_url)
+    print(f"[{idx}/{len(usuarios)}] Visitando {usuario}...")
+    sleep(3)
+    try:
+        btns = driver.find_elements(By.XPATH, "//button")
+        for btn in btns:
+            if btn.text.lower() in ["seguindo", "following"]:
+                btn.click()
+                try:
+                    confirmar_span = wait.until(EC.element_to_be_clickable((
+                        By.XPATH, "//span[text()='Deixar de seguir'] | //span[text()='Unfollow']"
+                    )))
+                    confirmar_span.click()
+                    print(f"✅ Deixou de seguir: {usuario}")
+                except Exception as e:
+                    print(f"⚠️ Botão de confirmação não encontrado para {usuario}: {e}")
+                break
+        else:
+            print(f"⚠️ Botão 'Seguindo' não encontrado para {usuario}.")
+    except NoSuchElementException as e:
+        print(f"⚠️ Erro com {usuario}: {e}")
+    sleep(TEMPO_ENTRE_ACOES)
+
+print("🎯 Concluído!")
+```
+
+## 🟢 Edge Version
+```python
+
+
+🟢 Versão para Edge
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.edge.service import Service
+from webdriver_manager.microsoft import EdgeChromiumDriverManager
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from time import sleep
+
+ARQUIVO_USUARIOS = "nao_me_seguem_de_volta.txt"
+TEMPO_LOGIN = 30
+TEMPO_ENTRE_ACOES = 5
+TIMEOUT_CONFIRMAR = 10
+
+with open(ARQUIVO_USUARIOS, "r", encoding="utf-8") as f:
+    usuarios = [line.strip() for line in f if line.strip()]
+
+print(f"Encontrados {len(usuarios)} usuários para deixar de seguir.")
+
+options = webdriver.EdgeOptions()
+options.add_argument("--start-maximized")
+options.add_experimental_option("detach", True)
+
+driver = webdriver.Edge(service=Service(EdgeChromiumDriverManager().install()), options=options)
+wait = WebDriverWait(driver, TIMEOUT_CONFIRMAR)
+
+print("Abra o navegador e faça login na sua conta.")
+driver.get("https://www.instagram.com")
+sleep(TEMPO_LOGIN)
+
+for idx, usuario in enumerate(usuarios, start=1):
+    perfil_url = f"https://www.instagram.com/{usuario}/"
+    driver.get(perfil_url)
+    print(f"[{idx}/{len(usuarios)}] Visitando {usuario}...")
+    sleep(3)
+    try:
+        btns = driver.find_elements(By.XPATH, "//button")
+        for btn in btns:
+            if btn.text.lower() in ["seguindo", "following"]:
+                btn.click()
+                try:
+                    confirmar_span = wait.until(EC.element_to_be_clickable((
+                        By.XPATH, "//span[text()='Deixar de seguir'] | //span[text()='Unfollow']"
+                    )))
+                    confirmar_span.click()
+                    print(f"✅ Deixou de seguir: {usuario}")
+                except Exception as e:
+                    print(f"⚠️ Botão de confirmação não encontrado para {usuario}: {e}")
+                break
+        else:
+            print(f"⚠️ Botão 'Seguindo' não encontrado para {usuario}.")
+    except NoSuchElementException as e:
+        print(f"⚠️ Erro com {usuario}: {e}")
+    sleep(TEMPO_ENTRE_ACOES)
+
+print("🎯 Concluído!")
+```
+
+---
+
+### 5️⃣ Run the script
+Navigate to the folder in Command Prompt:
+```bash
+cd path\to\folder
+```
+Then run:
+```bash
+python instagramUnfollowChrome.py
+```
+Or:
+```bash
+python instagramUnfollowEdge.py
+```
+
+✅ The script will open your chosen browser, prompt you to log in, and start unfollowing automatically after 30 seconds.
+
+---
+
+Enjoy! 🚀
+
